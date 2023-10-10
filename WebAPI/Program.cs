@@ -22,6 +22,7 @@ builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 builder.Host.ConfigureContainer<ContainerBuilder>(builder =>
 builder.RegisterModule(new AutofacBusinessModule()));
 
+builder.Services.AddCors();
 
 
 var tokenOptions = builder.Configuration.GetSection("TokenOptions").Get<TokenOptions>();
@@ -68,6 +69,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors(builder => builder.WithOrigins("http://localhost:4200").AllowAnyHeader());
 
 app.UseHttpsRedirection();
 
